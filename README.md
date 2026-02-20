@@ -1,118 +1,77 @@
-﻿# ⚡ Vektor — Análise de Tendências com IA
+﻿<div align="center">
 
-Plataforma de inteligência de mercado que combina **Google Trends** com **OpenAI** para gerar relatórios estratégicos sobre nichos, palavras-chave e oportunidades de conteúdo.
+# ⚡ Vektor
 
-![Python](https://img.shields.io/badge/Python-3.10+-3776AB?logo=python&logoColor=white)
-![Streamlit](https://img.shields.io/badge/Streamlit-1.33+-FF4B4B?logo=streamlit&logoColor=white)
-![OpenAI](https://img.shields.io/badge/OpenAI-GPT--4o--mini-412991?logo=openai&logoColor=white)
-![Docker](https://img.shields.io/badge/Docker-ready-2496ED?logo=docker&logoColor=white)
+**Inteligência de mercado em tempo real.**  
+Combine Google Trends + OpenAI para descobrir nichos, validar ideias e gerar relatórios estratégicos em segundos.
 
----
+[![Python](https://img.shields.io/badge/Python-3.10+-3776AB?logo=python&logoColor=white&style=flat-square)](https://python.org)
+[![Streamlit](https://img.shields.io/badge/Streamlit-1.33+-FF4B4B?logo=streamlit&logoColor=white&style=flat-square)](https://streamlit.io)
+[![OpenAI](https://img.shields.io/badge/GPT--4o--mini-412991?logo=openai&logoColor=white&style=flat-square)](https://openai.com)
+[![License](https://img.shields.io/badge/license-MIT-green?style=flat-square)](LICENSE)
 
-## Funcionalidades
-
-- **Tendência temporal** — gráfico de interesse ao longo do tempo para até 5 termos simultâneos
-- **Análise geográfica** — ranking dos países com maior interesse por termo
-- **Consultas relacionadas** — top queries e termos em alta associados ao nicho
-- **Correlação entre termos** — heatmap de correlação entre os termos pesquisados
-- **Relatório estratégico IA** — análise via GPT-4o-mini com oportunidades, perfil de público e plano de ação
-- **Cache inteligente** — resultados do Google Trends são cacheados por 1 hora
-- **Download do relatório** — exporta o relatório gerado em `.md`
+</div>
 
 ---
 
-## Estrutura do Projeto
+## O que é
 
-```
-Vektor/
-├── app/
-│   ├── main.py                  # Entry point Streamlit
-│   ├── components/
-│   │   ├── sidebar.py           # Sidebar com inputs e configurações
-│   │   └── charts.py            # Gráficos Plotly
-│   ├── services/
-│   │   ├── trends.py            # Integração pytrends + cache
-│   │   └── openai_service.py    # Integração OpenAI
-│   └── utils/
-│       └── helpers.py           # Funções auxiliares
-├── .streamlit/
-│   └── config.toml              # Tema dark premium
-├── requirements.txt
-├── Dockerfile
-├── docker-compose.yml
-└── README.md
-```
+Vektor é um micro-SaaS de análise de tendências que cruza dados do **Google Trends** com análise de **IA generativa** para entregar insights acionáveis sobre qualquer nicho de mercado — em menos de 30 segundos.
 
----
+## Features
 
-## Como Rodar
+- 📈 **Tendência temporal** — interesse ao longo do tempo para até 5 termos simultâneos
+- 🌍 **Mapa geográfico** — ranking dos países/regiões com maior demanda
+- 🔗 **Consultas relacionadas** — queries em alta e termos associados ao nicho
+- 🤖 **Relatório IA** — análise estratégica gerada por GPT-4o-mini com oportunidades, público-alvo e plano de ação 30/60/90 dias  
+- ⬇️ **Export .md** — baixe o relatório para usar onde quiser
+- ⚡ **Cache inteligente** — resultados cacheados por 1h para evitar bloqueios do Google
 
-### Opção 1 — Local
+## Stack
 
-**Pré-requisitos:** Python 3.10+
+| Layer | Tech |
+|---|---|
+| Frontend & Backend | Streamlit |
+| Dados | pytrends (Google Trends) |
+| IA | OpenAI GPT-4o-mini |
+| Visualização | Plotly |
+| Deploy | Streamlit Cloud / Docker |
+
+## Como rodar
 
 ```bash
-python -m venv .venv
-.venv\Scripts\activate        # Windows
-# source .venv/bin/activate   # macOS/Linux
+# 1. Clone e entre na pasta
+git clone https://github.com/seu-usuario/vektor.git && cd vektor
 
+# 2. Ambiente virtual
+python -m venv .venv
+.venv\Scripts\activate  # Windows
+# source .venv/bin/activate  # macOS/Linux
+
+# 3. Dependências
 pip install -r requirements.txt
-streamlit run app/main.py
+
+# 4. Rodar
+streamlit run streamlit_app.py
 ```
 
-Acesse: http://localhost:8501
+> A OpenAI API Key é inserida diretamente na interface. Nenhuma variável de ambiente necessária.
 
----
-
-### Opção 2 — Docker
+## Deploy com Docker
 
 ```bash
 docker-compose up --build
-# background:
-docker-compose up -d
 ```
 
-Para parar: `docker-compose down`
+## Deploy Streamlit Cloud
 
----
-
-### Opção 3 — Streamlit Community Cloud (deploy gratuito)
-
-1. Push para um repositório GitHub
+1. Suba o projeto no GitHub
 2. Acesse [share.streamlit.io](https://share.streamlit.io)
-3. Selecione o repo, branch `main` e arquivo `app/main.py`
-4. Clique em **Deploy**
-
-> A OpenAI API Key é inserida pela interface — sem secrets de ambiente necessários.
+3. Selecione o repo e defina `streamlit_app.py` como entry point
+4. Deploy ✅
 
 ---
 
-## OpenAI API Key
-
-Inserida diretamente na sidebar da aplicação. Usada apenas em memória, nunca persistida.
-
----
-
-## Dependências
-
-| Pacote      | Uso                       |
-| ----------- | ------------------------- |
-| `streamlit` | Frontend e servidor       |
-| `pytrends`  | Dados do Google Trends    |
-| `openai`    | Relatórios estratégicos   |
-| `plotly`    | Visualizações interativas |
-| `pandas`    | Manipulação de dados      |
-
----
-
-## Notas
-
-- Rate limit do Google Trends é tratado com mensagem amigável e instrução de aguardar.
-- Cache de 1h evita requisições repetidas para os mesmos parâmetros.
-- Modelo padrão: `gpt-4o-mini`. Para trocar, edite `app/services/openai_service.py`.
-
----
-
-## Licença
-
-MIT
+<div align="center">
+  <sub>Feito com Python · Streamlit · OpenAI</sub>
+</div>
