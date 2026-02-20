@@ -23,9 +23,9 @@ GEO_OPTIONS = {
 
 def render_sidebar() -> dict:
     with st.sidebar:
-        st.image("https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/googletrends.svg", width=32)
-        st.title("Vektor")
+        st.markdown("## ⚡ Vektor")
         st.caption("Análise de Tendências por IA")
+
         st.divider()
 
         st.subheader("Configurações")
