@@ -33,20 +33,20 @@ from app.utils.styles import PREMIUM_CSS
 
 
 def render_empty_state():
-    st.markdown("<br>", unsafe_allow_html=True)
-    col = st.columns([1, 4, 1])[1]
+    st.markdown("<br>" * 2, unsafe_allow_html=True)
+    col = st.columns([1, 2, 1])[1]
     with col:
         st.markdown(
             """
-            <div style="text-align:center; padding: 2rem 2rem 1.8rem; border: 1px solid rgba(255,255,255,0.07);
+            <div style="text-align:center; padding: 3.5rem 2rem; border: 1px solid rgba(255,255,255,0.07);
                         border-radius: 18px; background: rgba(255,255,255,0.02);">
-                <div style="font-size:2.8rem; margin-bottom:0.5rem;">⚡</div>
-                <h2 style="margin-bottom:0.3rem; font-weight:700;">Bem-vindo ao Vektor</h2>
+                <div style="font-size:3.5rem; margin-bottom:0.8rem;">⚡</div>
+                <h2 style="margin-bottom:0.4rem; font-weight:700;">Bem-vindo ao Vektor</h2>
                 <p style="color:#666; font-size:0.92rem; line-height:1.6;">
                     Insira palavras-chave na barra lateral e clique em<br>
                     <strong style="color:#a78bfa;">Analisar Tendências</strong> para começar.
                 </p>
-                <div style="margin-top:1rem; display:flex; justify-content:center; gap:0.6rem; flex-wrap:nowrap;">
+                <div style="margin-top:1.5rem; display:flex; justify-content:center; gap:0.6rem; flex-wrap:nowrap;">
                     <span style="background:rgba(124,92,252,0.12); border:1px solid rgba(124,92,252,0.25);
                            color:#c4b0ff; border-radius:20px; padding:4px 12px; font-size:0.76rem; white-space:nowrap;">
                         📈 Tendência Temporal
