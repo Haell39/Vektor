@@ -265,35 +265,41 @@ def main():
         if not p["api_key"]:
             st.info("Insira sua **OpenAI API Key** na barra lateral para gerar o relatório estratégico.", icon="🔑")
         else:
-            gen_col, _ = st.columns([1, 3])
-            generate = gen_col.button("Gerar Relatório Estratégico", type="primary")
+            report = st.session_state.get("ai_report")
 
-            if generate or "ai_report" in st.session_state:
-                if generate:
-                    summary = build_trends_summary(
-                        df,
-                        ibr["data"] if not ibr["error"] else None,
-                        p["keywords"], p["timeframe_label"], p["geo_label"],
-                    )
+            if not report:
+                gen_col, _ = st.columns([1, 3])
+                btn_slot = gen_col.empty()
+                if btn_slot.button("Gerar Relatório Estratégico", type="primary"):
+                    btn_slot.empty()
                     with st.spinner("Analisando dados com IA..."):
+                        summary = build_trends_summary(
+                            df,
+                            ibr["data"] if not ibr["error"] else None,
+                            p["keywords"], p["timeframe_label"], p["geo_label"],
+                        )
                         result = generate_strategic_report(p["api_key"], p["keywords"], summary)
                     if result["error"]:
                         st.error(result["error"])
-                        return
-                    st.session_state["ai_report"] = result["report"]
+                    else:
+                        st.session_state["ai_report"] = result["report"]
+                        report = result["report"]
 
-                report = st.session_state.get("ai_report")
-                if report:
-                    st.markdown('<div class="vektor-card">', unsafe_allow_html=True)
-                    st.markdown(report)
-                    st.markdown("</div>", unsafe_allow_html=True)
-                    st.markdown("<br>", unsafe_allow_html=True)
-                    st.download_button(
-                        "⬇ Baixar Relatório (.md)",
-                        data=report,
-                        file_name=f"vektor_report_{'_'.join(p['keywords'][:2])}.md",
-                        mime="text/markdown",
-                    )
+            if report:
+                st.markdown('<div class="vektor-card">', unsafe_allow_html=True)
+                st.markdown(report)
+                st.markdown("</div>", unsafe_allow_html=True)
+                st.markdown("<br>", unsafe_allow_html=True)
+                dl_col, regen_col, _ = st.columns([2, 2, 4])
+                dl_col.download_button(
+                    "⬇ Baixar Relatório (.md)",
+                    data=report,
+                    file_name=f"vektor_report_{'_'.join(p['keywords'][:2])}.md",
+                    mime="text/markdown",
+                )
+                if regen_col.button("🔄 Regenerar", type="secondary"):
+                    st.session_state.pop("ai_report", None)
+                    st.rerun()
 
     with tab_history:
         render_history_tab()
