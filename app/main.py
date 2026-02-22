@@ -46,21 +46,21 @@ def render_empty_state():
                     Insira palavras-chave na barra lateral e clique em<br>
                     <strong style="color:#a78bfa;">Analisar Tendências</strong> para começar.
                 </p>
-                <div style="margin-top:1.5rem; display:flex; justify-content:center; gap:0.6rem; flex-wrap:nowrap;">
+                <div style="margin-top:1.5rem; display:flex; justify-content:center; gap:0.5rem; flex-wrap:wrap;">
                     <span style="background:rgba(124,92,252,0.12); border:1px solid rgba(124,92,252,0.25);
-                           color:#c4b0ff; border-radius:20px; padding:6px 16px; font-size:0.87rem; white-space:nowrap;">
-                        📈 Tendência Temporal
+                           color:#c4b0ff; border-radius:20px; padding:5px 13px; font-size:0.82rem;">
+                        📈 Tendência
                     </span>
                     <span style="background:rgba(124,92,252,0.12); border:1px solid rgba(124,92,252,0.25);
-                           color:#c4b0ff; border-radius:20px; padding:6px 16px; font-size:0.87rem; white-space:nowrap;">
-                        🔮 Previsão 90 dias
+                           color:#c4b0ff; border-radius:20px; padding:5px 13px; font-size:0.82rem;">
+                        🔮 Previsão
                     </span>
                     <span style="background:rgba(124,92,252,0.12); border:1px solid rgba(124,92,252,0.25);
-                           color:#c4b0ff; border-radius:20px; padding:6px 16px; font-size:0.87rem; white-space:nowrap;">
-                        🤖 Relatório com IA
+                           color:#c4b0ff; border-radius:20px; padding:5px 13px; font-size:0.82rem;">
+                        🤖 Relatório IA
                     </span>
                     <span style="background:rgba(124,92,252,0.12); border:1px solid rgba(124,92,252,0.25);
-                           color:#c4b0ff; border-radius:20px; padding:6px 16px; font-size:0.87rem; white-space:nowrap;">
+                           color:#c4b0ff; border-radius:20px; padding:5px 13px; font-size:0.82rem;">
                         🗂 Histórico
                     </span>
                 </div>
@@ -268,22 +268,24 @@ def main():
             report = st.session_state.get("ai_report")
 
             if not report:
-                gen_col, _ = st.columns([1, 3])
-                btn_slot = gen_col.empty()
-                if btn_slot.button("Gerar Relatório Estratégico", type="primary"):
-                    btn_slot.empty()
-                    with st.spinner("Analisando dados com IA..."):
+                placeholder = st.empty()
+                with placeholder.container():
+                    if st.button("Gerar Relatório Estratégico", type="primary", key="btn_gen_report"):
+                        placeholder.empty()
+                        progress_slot = st.empty()
+                        progress_slot.info("⏳ Analisando dados com IA... aguarde.", icon="🤖")
                         summary = build_trends_summary(
                             df,
                             ibr["data"] if not ibr["error"] else None,
                             p["keywords"], p["timeframe_label"], p["geo_label"],
                         )
                         result = generate_strategic_report(p["api_key"], p["keywords"], summary)
-                    if result["error"]:
-                        st.error(result["error"])
-                    else:
-                        st.session_state["ai_report"] = result["report"]
-                        report = result["report"]
+                        progress_slot.empty()
+                        if result["error"]:
+                            st.error(result["error"])
+                        else:
+                            st.session_state["ai_report"] = result["report"]
+                            report = result["report"]
 
             if report:
                 st.markdown('<div class="vektor-card">', unsafe_allow_html=True)
