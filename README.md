@@ -26,22 +26,30 @@ Vektor é um micro-SaaS de análise de tendências que cruza dados do **Google T
 
 ## Features
 
-- 📈 **Tendência temporal** — interesse ao longo do tempo para até 5 termos simultâneos
-- 🌍 **Mapa geográfico** — ranking dos países/regiões com maior demanda
-- 🔗 **Consultas relacionadas** — queries em alta e termos associados ao nicho
-- 🤖 **Relatório IA** — análise estratégica gerada por GPT-4o-mini com oportunidades, público-alvo e plano de ação 30/60/90 dias
-- ⬇️ **Export .md** — baixe o relatório para usar onde quiser
-- ⚡ **Cache inteligente** — resultados cacheados por 1h para evitar bloqueios do Google
+> **v2.0** — interface premium com dark theme, previsão estatística e histórico persistente.
+
+| #   | Feature                    | Descrição                                                                              |
+| --- | -------------------------- | -------------------------------------------------------------------------------------- |
+| 📈  | **Tendência temporal**     | Interesse ao longo do tempo para até 5 termos, com anotação de pico                    |
+| 🔮  | **Previsão 90 dias**       | Projeção estatística via regressão polinomial + sazonalidade, com banda de confiança   |
+| 🌍  | **Mapa geográfico**        | Ranking dos países/regiões com maior demanda                                           |
+| 🔗  | **Consultas relacionadas** | Queries em alta e termos associados ao nicho                                           |
+| 🤖  | **Relatório IA**           | Análise estratégica por GPT-4o-mini: oportunidades, público-alvo e plano 30/60/90 dias |
+| 🗂  | **Histórico**              | Todas as buscas salvas automaticamente em SQLite local                                 |
+| ⬇️  | **Export .md**             | Baixe o relatório para usar onde quiser                                                |
+| ⚡  | **Cache inteligente**      | Resultados cacheados por 1h para evitar bloqueios do Google                            |
 
 ## Stack
 
-| Layer              | Tech                     |
-| ------------------ | ------------------------ |
-| Frontend & Backend | Streamlit                |
-| Dados              | pytrends (Google Trends) |
-| IA                 | OpenAI GPT-4o-mini       |
-| Visualização       | Plotly                   |
-| Deploy             | Streamlit Cloud / Docker |
+| Layer              | Tech                             |
+| ------------------ | -------------------------------- |
+| Frontend & Backend | Streamlit ≥ 1.33                 |
+| Dados              | pytrends ≥ 4.9.2 (Google Trends) |
+| IA                 | OpenAI GPT-4o-mini               |
+| Visualização       | Plotly ≥ 5.20                    |
+| Previsão           | NumPy (regressão polinomial)     |
+| Persistência       | SQLite3 (stdlib)                 |
+| Deploy             | Streamlit Cloud / Docker         |
 
 ## Como rodar
 
@@ -79,5 +87,5 @@ docker-compose up --build
 ---
 
 <div align="center">
-  <sub>Feito com Python · Streamlit · OpenAI</sub>
+  <sub>Vektor v2.0 · Feito com Python · Streamlit · OpenAI · NumPy · Plotly</sub>
 </div>
