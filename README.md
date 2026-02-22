@@ -10,6 +10,12 @@ Combine Google Trends + OpenAI para descobrir nichos, validar ideias e gerar rel
 [![OpenAI](https://img.shields.io/badge/GPT--4o--mini-412991?logo=openai&logoColor=white&style=flat-square)](https://openai.com)
 [![License](https://img.shields.io/badge/license-MIT-green?style=flat-square)](LICENSE)
 
+<br/>
+
+### 🚀 [**Acesse o app ao vivo → vektorapp.streamlit.app**](https://vektorapp.streamlit.app/)
+
+[![Live Demo](https://img.shields.io/badge/DEMO%20AO%20VIVO-▶%20Abrir%20Vektor-7C5CFC?style=for-the-badge&logo=streamlit&logoColor=white)](https://vektorapp.streamlit.app/)
+
 </div>
 
 ---
@@ -23,19 +29,19 @@ Vektor é um micro-SaaS de análise de tendências que cruza dados do **Google T
 - 📈 **Tendência temporal** — interesse ao longo do tempo para até 5 termos simultâneos
 - 🌍 **Mapa geográfico** — ranking dos países/regiões com maior demanda
 - 🔗 **Consultas relacionadas** — queries em alta e termos associados ao nicho
-- 🤖 **Relatório IA** — análise estratégica gerada por GPT-4o-mini com oportunidades, público-alvo e plano de ação 30/60/90 dias  
+- 🤖 **Relatório IA** — análise estratégica gerada por GPT-4o-mini com oportunidades, público-alvo e plano de ação 30/60/90 dias
 - ⬇️ **Export .md** — baixe o relatório para usar onde quiser
 - ⚡ **Cache inteligente** — resultados cacheados por 1h para evitar bloqueios do Google
 
 ## Stack
 
-| Layer | Tech |
-|---|---|
-| Frontend & Backend | Streamlit |
-| Dados | pytrends (Google Trends) |
-| IA | OpenAI GPT-4o-mini |
-| Visualização | Plotly |
-| Deploy | Streamlit Cloud / Docker |
+| Layer              | Tech                     |
+| ------------------ | ------------------------ |
+| Frontend & Backend | Streamlit                |
+| Dados              | pytrends (Google Trends) |
+| IA                 | OpenAI GPT-4o-mini       |
+| Visualização       | Plotly                   |
+| Deploy             | Streamlit Cloud / Docker |
 
 ## Como rodar
 
