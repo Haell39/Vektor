@@ -48,19 +48,19 @@ def render_empty_state():
                 </p>
                 <div style="margin-top:1.5rem; display:flex; justify-content:center; gap:0.6rem; flex-wrap:nowrap;">
                     <span style="background:rgba(124,92,252,0.12); border:1px solid rgba(124,92,252,0.25);
-                           color:#c4b0ff; border-radius:20px; padding:4px 12px; font-size:0.76rem; white-space:nowrap;">
+                           color:#c4b0ff; border-radius:20px; padding:6px 16px; font-size:0.87rem; white-space:nowrap;">
                         📈 Tendência Temporal
                     </span>
                     <span style="background:rgba(124,92,252,0.12); border:1px solid rgba(124,92,252,0.25);
-                           color:#c4b0ff; border-radius:20px; padding:4px 12px; font-size:0.76rem; white-space:nowrap;">
+                           color:#c4b0ff; border-radius:20px; padding:6px 16px; font-size:0.87rem; white-space:nowrap;">
                         🔮 Previsão 90 dias
                     </span>
                     <span style="background:rgba(124,92,252,0.12); border:1px solid rgba(124,92,252,0.25);
-                           color:#c4b0ff; border-radius:20px; padding:4px 12px; font-size:0.76rem; white-space:nowrap;">
+                           color:#c4b0ff; border-radius:20px; padding:6px 16px; font-size:0.87rem; white-space:nowrap;">
                         🤖 Relatório com IA
                     </span>
                     <span style="background:rgba(124,92,252,0.12); border:1px solid rgba(124,92,252,0.25);
-                           color:#c4b0ff; border-radius:20px; padding:4px 12px; font-size:0.76rem; white-space:nowrap;">
+                           color:#c4b0ff; border-radius:20px; padding:6px 16px; font-size:0.87rem; white-space:nowrap;">
                         🗂 Histórico
                     </span>
                 </div>
