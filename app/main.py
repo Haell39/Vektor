@@ -33,41 +33,41 @@ from app.utils.styles import PREMIUM_CSS
 
 
 def render_empty_state():
-    st.markdown("<br>" * 2, unsafe_allow_html=True)
-    col = st.columns([1, 2, 1])[1]
-    with col:
-        st.markdown(
-            """
-            <div style="text-align:center; padding: 3.5rem 2rem; border: 1px solid rgba(255,255,255,0.07);
-                        border-radius: 18px; background: rgba(255,255,255,0.02);">
-                <div style="font-size:3.5rem; margin-bottom:0.8rem;">⚡</div>
-                <h2 style="margin-bottom:0.4rem; font-weight:700;">Bem-vindo ao Vektor</h2>
-                <p style="color:#666; font-size:0.92rem; line-height:1.6;">
+    st.markdown(
+        """
+        <div style="display:flex; justify-content:center; padding-top:3rem;">
+            <div style="text-align:center; padding:2.5rem 2rem; border:1px solid rgba(255,255,255,0.07);
+                        border-radius:18px; background:rgba(255,255,255,0.02);
+                        width:100%; max-width:520px; box-sizing:border-box;">
+                <div style="font-size:3rem; margin-bottom:0.6rem;">⚡</div>
+                <h2 style="margin-bottom:0.3rem; font-weight:700;">Bem-vindo ao Vektor</h2>
+                <p style="color:#666; font-size:0.9rem; line-height:1.6;">
                     Insira palavras-chave na barra lateral e clique em<br>
                     <strong style="color:#a78bfa;">Analisar Tendências</strong> para começar.
                 </p>
-                <div style="margin-top:1.5rem; display:flex; justify-content:center; gap:0.5rem; flex-wrap:wrap;">
+                <div style="margin-top:1.2rem; display:flex; justify-content:center; gap:0.45rem; flex-wrap:wrap;">
                     <span style="background:rgba(124,92,252,0.12); border:1px solid rgba(124,92,252,0.25);
-                           color:#c4b0ff; border-radius:20px; padding:5px 13px; font-size:0.82rem;">
+                           color:#c4b0ff; border-radius:20px; padding:4px 11px; font-size:0.78rem;">
                         📈 Tendência
                     </span>
                     <span style="background:rgba(124,92,252,0.12); border:1px solid rgba(124,92,252,0.25);
-                           color:#c4b0ff; border-radius:20px; padding:5px 13px; font-size:0.82rem;">
+                           color:#c4b0ff; border-radius:20px; padding:4px 11px; font-size:0.78rem;">
                         🔮 Previsão
                     </span>
                     <span style="background:rgba(124,92,252,0.12); border:1px solid rgba(124,92,252,0.25);
-                           color:#c4b0ff; border-radius:20px; padding:5px 13px; font-size:0.82rem;">
+                           color:#c4b0ff; border-radius:20px; padding:4px 11px; font-size:0.78rem;">
                         🤖 Relatório IA
                     </span>
                     <span style="background:rgba(124,92,252,0.12); border:1px solid rgba(124,92,252,0.25);
-                           color:#c4b0ff; border-radius:20px; padding:5px 13px; font-size:0.82rem;">
+                           color:#c4b0ff; border-radius:20px; padding:4px 11px; font-size:0.78rem;">
                         🗂 Histórico
                     </span>
                 </div>
             </div>
-            """,
-            unsafe_allow_html=True,
-        )
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
 
 
 def render_metrics(df):
@@ -267,26 +267,6 @@ def main():
         else:
             report = st.session_state.get("ai_report")
 
-            if not report:
-                placeholder = st.empty()
-                with placeholder.container():
-                    if st.button("Gerar Relatório Estratégico", type="primary", key="btn_gen_report"):
-                        placeholder.empty()
-                        progress_slot = st.empty()
-                        progress_slot.info("⏳ Analisando dados com IA... aguarde.", icon="🤖")
-                        summary = build_trends_summary(
-                            df,
-                            ibr["data"] if not ibr["error"] else None,
-                            p["keywords"], p["timeframe_label"], p["geo_label"],
-                        )
-                        result = generate_strategic_report(p["api_key"], p["keywords"], summary)
-                        progress_slot.empty()
-                        if result["error"]:
-                            st.error(result["error"])
-                        else:
-                            st.session_state["ai_report"] = result["report"]
-                            report = result["report"]
-
             if report:
                 st.markdown('<div class="vektor-card">', unsafe_allow_html=True)
                 st.markdown(report)
@@ -302,6 +282,24 @@ def main():
                 if regen_col.button("🔄 Regenerar", type="secondary"):
                     st.session_state.pop("ai_report", None)
                     st.rerun()
+            elif st.session_state.get("ai_generating"):
+                st.info("⏳ Analisando dados com IA... aguarde.", icon="🤖")
+                summary = build_trends_summary(
+                    df,
+                    ibr["data"] if not ibr["error"] else None,
+                    p["keywords"], p["timeframe_label"], p["geo_label"],
+                )
+                result = generate_strategic_report(p["api_key"], p["keywords"], summary)
+                st.session_state["ai_generating"] = False
+                if result["error"]:
+                    st.error(result["error"])
+                else:
+                    st.session_state["ai_report"] = result["report"]
+                    st.rerun()
+            else:
+                def _start_gen():
+                    st.session_state["ai_generating"] = True
+                st.button("Gerar Relatório Estratégico", type="primary", on_click=_start_gen)
 
     with tab_history:
         render_history_tab()
