@@ -34,7 +34,7 @@ from app.utils.styles import PREMIUM_CSS
 
 def render_empty_state():
     st.markdown("<br>" * 2, unsafe_allow_html=True)
-    col = st.columns([1, 2, 1])[1]
+    col = st.columns([1, 4, 1])[1]
     with col:
         st.markdown(
             """
@@ -46,21 +46,21 @@ def render_empty_state():
                     Insira palavras-chave na barra lateral e clique em<br>
                     <strong style="color:#a78bfa;">Analisar Tendências</strong> para começar.
                 </p>
-                <div style="margin-top:1.5rem; display:flex; justify-content:center; gap:1rem; flex-wrap:wrap;">
+                <div style="margin-top:1.5rem; display:flex; justify-content:center; gap:0.6rem; flex-wrap:nowrap;">
                     <span style="background:rgba(124,92,252,0.12); border:1px solid rgba(124,92,252,0.25);
-                           color:#c4b0ff; border-radius:20px; padding:4px 14px; font-size:0.78rem;">
+                           color:#c4b0ff; border-radius:20px; padding:4px 12px; font-size:0.76rem; white-space:nowrap;">
                         📈 Tendência Temporal
                     </span>
                     <span style="background:rgba(124,92,252,0.12); border:1px solid rgba(124,92,252,0.25);
-                           color:#c4b0ff; border-radius:20px; padding:4px 14px; font-size:0.78rem;">
+                           color:#c4b0ff; border-radius:20px; padding:4px 12px; font-size:0.76rem; white-space:nowrap;">
                         🔮 Previsão 90 dias
                     </span>
                     <span style="background:rgba(124,92,252,0.12); border:1px solid rgba(124,92,252,0.25);
-                           color:#c4b0ff; border-radius:20px; padding:4px 14px; font-size:0.78rem;">
+                           color:#c4b0ff; border-radius:20px; padding:4px 12px; font-size:0.76rem; white-space:nowrap;">
                         🤖 Relatório com IA
                     </span>
                     <span style="background:rgba(124,92,252,0.12); border:1px solid rgba(124,92,252,0.25);
-                           color:#c4b0ff; border-radius:20px; padding:4px 14px; font-size:0.78rem;">
+                           color:#c4b0ff; border-radius:20px; padding:4px 12px; font-size:0.76rem; white-space:nowrap;">
                         🗂 Histórico
                     </span>
                 </div>
