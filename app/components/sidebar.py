@@ -23,43 +23,52 @@ GEO_OPTIONS = {
 
 def render_sidebar() -> dict:
     with st.sidebar:
-        st.markdown("## ⚡ Vektor")
-        st.caption("Análise de Tendências por IA")
-
+        st.markdown(
+            """
+            <div style="padding: 0.5rem 0 0.2rem 0;">
+                <span style="font-size:1.5rem; font-weight:800; letter-spacing:-0.5px;">⚡ Vektor</span>
+                <span style="display:block; color:#555; font-size:0.78rem; margin-top:2px;">
+                    Market Intelligence · v2.0
+                </span>
+            </div>
+            """,
+            unsafe_allow_html=True,
+        )
         st.divider()
 
-        st.subheader("Configurações")
-
+        st.markdown("**🔑 OpenAI API Key**")
         api_key = st.text_input(
             "OpenAI API Key",
             type="password",
             placeholder="sk-...",
-            help="Sua chave é usada apenas localmente, nunca armazenada.",
+            help="Usada apenas em memória, nunca armazenada.",
+            label_visibility="collapsed",
         )
+        if api_key:
+            st.caption("✅ Chave configurada")
 
         st.divider()
-        st.subheader("Parâmetros de Busca")
+        st.markdown("**🔍 Parâmetros de Busca**")
 
         raw_keywords = st.text_area(
             "Palavras-chave",
-            placeholder="ex: marketing digital\nprodutividade\nia generativa",
-            height=110,
+            placeholder="ex: micro saas\nai tools\nautomação whatsapp",
+            height=115,
             help="Uma por linha. Máximo de 5.",
         )
-
         keywords = [k.strip() for k in raw_keywords.splitlines() if k.strip()][:5]
 
         if keywords:
-            st.caption(f"{len(keywords)}/5 termo(s) adicionado(s)")
+            st.caption(f"{'🟢' * len(keywords)}{'⚫' * (5 - len(keywords))}  {len(keywords)}/5 termos")
 
         timeframe_label = st.selectbox("Período", list(TIMEFRAMES.keys()), index=5)
         geo_label = st.selectbox("Região", list(GEO_OPTIONS.keys()), index=0)
 
         st.divider()
-        analyze = st.button("Analisar Tendências", type="primary", use_container_width=True)
+        analyze = st.button("⚡ Analisar Tendências", type="primary", use_container_width=True)
 
-        st.divider()
-        st.caption("Vektor v1.0 · Dados via Google Trends")
+        st.markdown("<br>", unsafe_allow_html=True)
+        st.caption("Cache ativo · 1h · Dados: Google Trends")
 
     return {
         "api_key": api_key,
