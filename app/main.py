@@ -262,8 +262,8 @@ def main():
                     st.info("Sem dados de consultas em alta.")
 
     with tab_ai:
-        if not p["api_key"]:
-            st.info("Insira sua **OpenAI API Key** na barra lateral para gerar o relatório estratégico.", icon="🔑")
+        if not params["api_key"]:
+            st.info("Insira sua **API Key** na barra lateral para gerar o relatório estratégico.", icon="🔑")
         else:
             report = st.session_state.get("ai_report")
 
@@ -283,13 +283,19 @@ def main():
                     st.session_state.pop("ai_report", None)
                     st.rerun()
             elif st.session_state.get("ai_generating"):
-                st.info("⏳ Analisando dados com IA... aguarde.", icon="🤖")
+                provider_label = params.get("provider", "OpenAI")
+                model_label = params.get("model_id", "gpt-4o-mini")
+                st.info(f"⏳ Analisando com **{provider_label}** (`{model_label}`)... aguarde.", icon="🤖")
                 summary = build_trends_summary(
                     df,
                     ibr["data"] if not ibr["error"] else None,
                     p["keywords"], p["timeframe_label"], p["geo_label"],
                 )
-                result = generate_strategic_report(p["api_key"], p["keywords"], summary)
+                result = generate_strategic_report(
+                    params["api_key"], p["keywords"], summary,
+                    base_url=params.get("base_url"),
+                    model=params.get("model_id", "gpt-4o-mini"),
+                )
                 st.session_state["ai_generating"] = False
                 if result["error"]:
                     st.error(result["error"])
